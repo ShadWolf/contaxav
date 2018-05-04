@@ -34,9 +34,12 @@ public class ProductController {
     }
 
     @RequestMapping("/")
-    public String redirToList(){
-        return "redirect:/product/list";
+    public String showIndex() {
+    	return "index.html"
     }
+   /* public String redirToList(){
+        return "redirect:/product/list";
+    }*/
 
     @RequestMapping({"/product/list", "/product"})
     public String listProducts(Model model){
