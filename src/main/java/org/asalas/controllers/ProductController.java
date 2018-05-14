@@ -1,6 +1,7 @@
 package org.asalas.controllers;
 
 import org.asalas.commands.ProductForm;
+import org.asalas.commands.LoginForm;
 import org.asalas.converters.ProductToProductForm;
 import org.asalas.domain.Product;
 import org.asalas.services.ProductService;
@@ -8,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,11 +36,42 @@ public class ProductController {
     public void setProductService(ProductService productService) {
         this.productService = productService;
     }
-
+    
     @RequestMapping("/")
     public String showIndex() {
-    	return "index.html";
+    	return "redirect:/login";
     }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(){
+         return "login";
+    }
+
+  
+    @RequestMapping("/dashboard")
+    public String showDashboard() {
+    	return "dashboard";
+    }
+  /*  @RequestMapping("/index.html")
+    public String showIndexHtml() {
+    	return "dashboard.html";
+    }
+    @GetMapping("/login")
+    public String showLoginHtml(Model model) {
+    	model.addAttribute("loginObj", new LoginForm());
+    	return "login";
+    }
+    @PostMapping("/login")
+    public String doLoginEval(@ModelAttribute LoginForm loginForm )  {
+    	String user = loginForm.getUsername();
+    	String passwd = loginForm.getPassword();
+    	System.out.println("user: " + user + "pwd: " +  passwd);
+    	if("admin".equals(user) && "adm123".equals(passwd)) {
+    		return "dashboard.html";
+    	} 
+    	return "redirect:/login";
+    }
+    */
    /* public String redirToList(){
         return "redirect:/product/list";
     }*/
