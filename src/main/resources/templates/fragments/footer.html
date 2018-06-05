@@ -7,15 +7,22 @@
 <div th:fragment="footer">
     <div class="container">
 
-        <footer>
+        <footer class="sticky-footer">
         <!-- this is footer -->
-        © 2017 mkyong.com
+		
+      </div>
             <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
+               Logged user: <span sec:authentication="name"></span> |
                 Roles: <span sec:authentication="principal.authorities"></span> |
                 <a th:href="@{/logout}">Sign Out</a>
             </span>
-
+		<div class="container">
+        <div class="text-center">
+          <small>Copyright © Shadwolf 2018</small>
+        </div>
+         <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
         <script type="text/javascript"
                 src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 

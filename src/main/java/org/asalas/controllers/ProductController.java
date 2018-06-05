@@ -52,6 +52,14 @@ public class ProductController {
     public String showDashboard() {
     	return "dashboard";
     }
+    @RequestMapping("/charts")
+    public String showCharts() {
+    	return "charts";
+    }
+    @RequestMapping("/tables")
+    public String showTables() {
+    	return "tables";
+    }
   /*  @RequestMapping("/index.html")
     public String showIndexHtml() {
     	return "dashboard.html";
