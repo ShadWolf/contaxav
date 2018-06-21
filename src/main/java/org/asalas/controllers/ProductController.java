@@ -6,8 +6,10 @@ import org.asalas.converters.ProductToProductForm;
 import org.asalas.domain.Product;
 import org.asalas.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,16 +51,19 @@ public class ProductController {
 
   
     @RequestMapping("/dashboard")
-    public String showDashboard() {
-    	return "dashboard";
+    public String showDashboard(ModelMap model) {
+    	model.addAttribute("page", "dashboard");
+    	return "mainpage";
     }
     @RequestMapping("/charts")
-    public String showCharts() {
-    	return "charts";
+    public String showCharts(ModelMap model) {
+    	model.addAttribute("page", "charts");
+    	return "mainpage";
     }
     @RequestMapping("/tables")
-    public String showTables() {
-    	return "tables";
+    public String showTables(ModelMap model) {
+    	model.addAttribute("page", "tables");
+    	return "mainpage";
     }
   /*  @RequestMapping("/index.html")
     public String showIndexHtml() {
