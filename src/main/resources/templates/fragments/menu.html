@@ -21,6 +21,10 @@
 						<i class="fa fa-fw fa-dashboard"></i> <span class="nav-link-text">Dashboard</span>
 				</a></li>
 				<li class="nav-item" data-toggle="tooltip" data-placement="right"
+					title="Charts"><a class="nav-link" href="users" th:href="users"> <i
+						class="fa fa-fw fa-users"></i> <span class="nav-link-text">Utilisateurs</span>
+				</a></li>
+				<li class="nav-item" data-toggle="tooltip" data-placement="right"
 					title="Charts"><a class="nav-link" href="charts" th:href="charts"> <i
 						class="fa fa-fw fa-area-chart"></i> <span class="nav-link-text">Charts</span>
 				</a></li>
@@ -177,7 +181,7 @@
 				-->
 				<li class="nav-item">
 				   <span sec:authorize="isAuthenticated()" class="nav-link" style="text-align: left;">
-               Bonjour <span sec:authentication="name"></span>, 
+               Bonjour <i class="fa fa-fw fa-user-circle"></i><span sec:authentication="name"></span>, 
                Roles: <span sec:authentication="principal.authorities"></span>
             </span>
             </li>

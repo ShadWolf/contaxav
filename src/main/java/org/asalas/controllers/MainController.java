@@ -4,7 +4,11 @@ import org.asalas.commands.ProductForm;
 import org.asalas.commands.LoginForm;
 import org.asalas.converters.ProductToProductForm;
 import org.asalas.domain.Product;
+import org.asalas.dto.Users;
 import org.asalas.services.ProductService;
+import org.asalas.services.UsersService;
+import org.asalas.services.CustomerUserDetailsService;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -24,11 +35,14 @@ import javax.validation.Valid;
  * Created by jt on 1/10/17.
  */
 @Controller
-public class ProductController {
+public class MainController {
     private ProductService productService;
 
     private ProductToProductForm productToProductForm;
 
+   
+    
+    
     @Autowired
     public void setProductToProductForm(ProductToProductForm productToProductForm) {
         this.productToProductForm = productToProductForm;
@@ -49,7 +63,30 @@ public class ProductController {
          return "login";
     }
 
-  
+    @RequestMapping("/users")
+    public String showUsers(ModelMap model) {
+    	UsersService c =  new UsersService();
+    	Users user = new Users(); 
+    	model.addAttribute("page", "users");
+    	model.addAttribute("varMsg", "");
+    	model.addAttribute("varList", c.listSecUsersMongoDB());
+    	model.addAttribute("varForm", user );
+    	
+    	return "mainpage";
+    }
+    
+    @RequestMapping(value = "/useradd", method = RequestMethod.POST)
+    public String addUser (@ModelAttribute Users userForm, ModelMap model) {
+    	UsersService c =  new UsersService();
+    	String msg = c.addUser(userForm);
+    	Users user = new Users(); 
+    	model.addAttribute("page", "users");
+    	model.addAttribute("varList", c.listSecUsersMongoDB());
+    	model.addAttribute("varForm", user );
+    	model.addAttribute("varMsg", msg);
+    	return "mainpage";
+    }
+    
     @RequestMapping("/dashboard")
     public String showDashboard(ModelMap model) {
     	model.addAttribute("page", "dashboard");
