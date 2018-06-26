@@ -1,14 +1,12 @@
 package org.asalas.services;
 
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.asalas.dto.Users;
 import org.bson.Document;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.monitor.BackgroundFlushingMetrics;
-
-import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -37,16 +35,16 @@ public class UsersService {
     }
     
     public String addUser(Users userForm) {
-    	String[] authorities = {"Admin", "User"};
      	MongoClient mongoClient = new MongoClient(); 
     	MongoDatabase database = mongoClient.getDatabase("springsecurity");
         MongoCollection<Document> collection = database.getCollection("users");
-    	Document document = new Document();
+    	
+        Document document = new Document();
     	document.put("name", userForm.getName());
     	document.put("surname", userForm.getSurname());
     	document.put("password", userForm.getPassword());
-    	document.put("authorities", authorities.toString());
-        
+    	document.put("authorities", Arrays.asList("admin", "user"));
+         
     	collection.insertOne(document);
     	return "Nouvel Utilisateur ajoute !";
     }
