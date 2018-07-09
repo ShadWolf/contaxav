@@ -56,7 +56,7 @@ public class CustomUserDetailsSecurityConfig extends WebSecurityConfigurerAdapte
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**", "/login", "/templates/**", "/webjars/**", "/vendor/**", "/css/**")
+		http.authorizeRequests().antMatchers("/**", "/resources", "/login", "/templates/**", "/webjars/**", "/vendor/**", "/css/**")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login")
 				.successForwardUrl("/dashboard").permitAll().and().logout().permitAll();
 

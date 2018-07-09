@@ -1,13 +1,17 @@
 package org.asalas.controllers;
 
 import org.asalas.commands.ProductForm;
+import org.asalas.commands.UnityForm;
+import org.asalas.converters.UnityFormToUnity;
 import org.asalas.commands.LoginForm;
-import org.asalas.converters.ProductToProductForm;
+// import org.asalas.converters.ProductToProductForm;
 import org.asalas.domain.Product;
+import org.asalas.domain.Unity;	
 import org.asalas.dto.Users;
-import org.asalas.services.ProductService;
+//import org.asalas.services.ProductService;
 import org.asalas.services.UsersService;
 import org.asalas.services.CustomerUserDetailsService;
+import org.asalas.services.UnityService;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
@@ -27,6 +31,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -36,23 +41,23 @@ import javax.validation.Valid;
  */
 @Controller
 public class MainController {
-    private ProductService productService;
+  //  private ProductService productService;
 
-    private ProductToProductForm productToProductForm;
+ //   private ProductToProductForm productToProductForm;
 
-   
+	private UnityService unityService;
     
     
-    @Autowired
+/*    @Autowired
     public void setProductToProductForm(ProductToProductForm productToProductForm) {
         this.productToProductForm = productToProductForm;
     }
 
-    @Autowired
+   @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
     }
-    
+ */   
     @RequestMapping("/")
     public String showIndex() {
     	return "redirect:/login";
@@ -102,6 +107,42 @@ public class MainController {
     	model.addAttribute("page", "tables");
     	return "mainpage";
     }
+    
+    @RequestMapping("/stocks")
+    public String showStockForm(ModelMap model) {
+    	model.addAttribute("page", "stockforms");
+    	return "mainpage";
+    }
+    
+    @RequestMapping("/unitform")
+    public String showUnitForm(ModelMap model) {
+    	UnityForm unitform =  new UnityForm();
+    	List<Unity> ul;
+    	//recuperar todas las unidades existente
+    	try {
+    		ul = unityService.listAll();
+    	} catch (Exception ex) {
+    		ul =  new ArrayList<>();	
+    	}
+    	
+//    	unitform.setUnitlist(ul);
+    	
+//    	unitform.setUnitlist();
+    	model.addAttribute("page", "unitform");
+    	model.addAttribute("varForm", unitform );
+    	return "mainpage";
+    }
+    @RequestMapping( value = "/unitadd", method = RequestMethod.POST )
+    public String getUnitForm(@ModelAttribute UnityForm unitForm, ModelMap model) {
+    	String msg = null ;
+    	System.out.println("getUniyForm" + unitForm.toString());
+    	Unity unit = UnityFormToUnity.convert(unitForm);
+    	unit.setConvunit(unityService.getById(unitForm.getUnitid()));
+    	msg = "Unite ajoute ok";
+    	model.addAttribute("page", "stockforms");
+    	model.addAttribute("varMsg", msg);
+    	return "mainpage";
+    }
   /*  @RequestMapping("/index.html")
     public String showIndexHtml() {
     	return "dashboard.html";
@@ -125,7 +166,7 @@ public class MainController {
    /* public String redirToList(){
         return "redirect:/product/list";
     }*/
-
+/*
     @RequestMapping({"/product/list", "/product"})
     public String listProducts(Model model){
         model.addAttribute("products", productService.listAll());
@@ -138,7 +179,7 @@ public class MainController {
         return "product/show";
     }
 
-    @RequestMapping("product/edit/{id}")
+   @RequestMapping("product/edit/{id}")
     public String edit(@PathVariable String id, Model model){
         Product product = productService.getById(id);
         ProductForm productForm = productToProductForm.convert(product);
@@ -170,4 +211,5 @@ public class MainController {
         productService.delete(id);
         return "redirect:/product/list";
     }
+    */
 }
